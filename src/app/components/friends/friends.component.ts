@@ -3,7 +3,7 @@ import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 @Component({
     selector: 'app-friends',
     templateUrl: './friends.component.html',
-    styleUrls: ['./friends.component.css']
+    styleUrls: ['../../../assets/css/components.css']
 })
 export class FriendsComponent implements OnInit {
 

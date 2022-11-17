@@ -4,7 +4,7 @@ import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['../../../assets/css/components.css']
 })
 
 export class ChatComponent implements OnInit, AfterViewChecked {

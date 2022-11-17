@@ -1,0 +1,207 @@
+/* variables for colors */
+$light: #FFFFFF;
+$dark: #000000;
+$primary: #DB9D47;
+$secondary: #1B1B27;
+$red: #FF0000;
+$green: #1eff00;
+
+/* variables for spacing */
+$mElementS: 1rem;
+$mElementM: 2rem;
+$mElementL: 3rem;
+$pContainerS: 1.5rem;
+$pContainerL: 4.25rem;
+
+.card {
+    background-color: $light;
+    padding: $pContainerL;
+    border-radius: 1.5rem;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: "center";
+    justify-content: "center";
+    color: $dark;
+}
+
+.image {
+    border-radius: 50%;
+    width: 160px;
+    height: 160px;
+}
+
+.button {
+    font-size: 16px;
+    background-color: $primary;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 0 0;
+    text-transform: "lowercase";
+    transition: 0.30s;
+    color: $secondary;
+    width: 200px;
+    padding: 15px 35px 15px 35px;
+    border: none;
+    font-weight: bold;
+}
+
+.button:hover {
+    background-color: $secondary;
+    box-shadow: 0 0 0 0;
+    transition: 0.30s;
+    color: $light;
+}
+
+.breadcrumb {
+    width: max-content;
+    margin-bottom: 2rem;
+}
+
+.breadcrumb-divider {
+    color: $dark;
+}
+
+.link {
+    color: $primary;
+    transition: text-shadow .30s;
+    font-weight: bold;
+}
+
+.link:hover {
+    transition: 0.30s;
+    color: $secondary
+}
+
+.paragraph {
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+
+.input {
+    font-size: 14px;
+    border: none;
+    border: 2px solid rgba(0,0,0,0);
+    border-bottom: 1px solid $dark;
+    width: 100%;
+    padding: 7px;
+    display: block;
+    transition: all .15s ease-out;
+}
+
+.input:focus {
+    border-color: $dark;
+    border: 2px solid $dark;
+    padding: 10px;
+    transition: all .15s ease-out;
+    border-radius: 4px;
+}
+
+.input::placeholder {
+    color: $dark;
+}
+
+.input:valid {
+    border-color: $dark;
+    border: 2px solid $dark;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.input-success {
+    font-size: 14px;
+    border: none;
+    border: 2px solid $green;
+    width: 100%;
+    padding: 7px;
+    display: block;
+}
+
+.input-success:valid {
+    border-color: $green;
+    border: 2px solid $green;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.input-error:valid {
+    border-color: $red;
+    border: 3px solid $red;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.error-message {
+    font-size: 12px;
+    color: $red;
+}
+
+.notification-count {
+    color: $light;
+    background-color: $primary;
+    box-shadow: 1px 1px 1px $dark;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+    margin-left: .25rem;
+}
+
+.removeFriend {
+    transition: color .2s, text-shadow .5s;
+}
+
+.removeFriend:hover {
+    color: $red;
+}
+
+.notification-count:empty {
+    padding: 0px;
+}
+
+.chat-message {
+    display: grid;
+    grid-template-columns: 7fr 1fr;
+}
+
+.time {
+    color: grey;
+}
+
+.textarea {
+    max-width: 750px;
+}
+
+.chat-helper-div {
+    transform: rotateX(180deg);
+}
+
+#chat {
+    overflow-y: auto;
+    max-height: 200px;
+    transform: rotateX(180deg);
+    /* scrollbar firefox */
+    @-moz-document url-prefix() {
+        scrollbar-color: #4f4f4f #fff;
+        scrollbar-width: thin;
+    }
+}
+
+.suggested-friends {
+    border: 2px solid black;
+    border-radius: 4px;
+    overflow: hidden;
+    display: none;
+}
+
+.suggested-friends-entry:hover {
+    cursor: pointer;
+    color: $primary;
+}
+
+@media(max-width: 700px) {
+    .button-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}

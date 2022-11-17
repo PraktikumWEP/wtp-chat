@@ -1,1 +1,66 @@
-<h1>FriendsComponent works!</h1>
+<div class="background centerRow">
+    <div class="register max-width centerRowV card">
+        <div class="mElement">
+            <h1>Friends</h1>
+        </div>
+        <div class="breadcrumb mElement">
+            <a href="logout.html" class="link">&lt; Logout</a>
+            <label class="breadcrumb-divider">&nbsp;|&nbsp;</label>
+            <a href="settings.html" class="link">Settings</a>
+        </div>
+        <hr class="friendlist-divider ">
+        <div class="mElementM">
+            <section>
+                <ul>
+                    <li>
+                        <a href="chat.html" class="link">Tom</a>
+                        <label class="notification-count">3</label>
+                    </li>
+                    <li>
+                        <a href="chat.html" class="link">Marvin</a>
+                        <label class="notification-count">1</label>
+                    </li>
+                    <li>
+                        <a href="chat.html" class="link">Tick</a>
+                        <label class="notification-count"></label>
+                    </li>
+                    <li>
+                        <a href="chat.html" class="link">Trick</a>
+                        <label class="notification-count"></label>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <hr class="friendlist-divider">
+        <div class="mElementM">
+            <section>
+                <div class="mElement">
+                    <h2>New Requests</h2>
+                </div>
+                <div>
+                    <ol>
+                        <li><a href="http://github.com/PraktikumWEP" class="link">Friend request from Track</a></li>
+                    </ol>
+                </div>
+            </section>
+        </div>
+        <hr class="friendlist-divider">
+        <div class="mElementM">
+            <form method="GET" action="chat.html" name="addFriend">
+                <div class="mElement">
+                    <div class="mElement">
+                        <input type="name" placeholder="Name" class="input" required/>
+                        <div class="suggested-friends">
+                        </div>
+                    </div>
+                    <div class="mElementM">
+                        <button class="button">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="module" src="assets/js/friends.js"></script>
