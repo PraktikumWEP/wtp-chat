@@ -1,22 +1,22 @@
 <div class="background centerRow">
     <div class="register max-width centerRowV card">
         <div class="chat-text mElement">
-            <h1>Chat with Jerry</h1>
+            <h1>Chat with {{ otherUser }}</h1>
         </div>
         <div class="breadcrumb mElement">
-            <a class="link" href="friendlist.html">
+            <a class="link" (click)="friends()">
                 &lt; Back
             </a>
             <label class="breadcrumb-divider">
                 &nbsp;|&nbsp;
             </label>
-            <a class="link" href="profile.html">
+            <a class="link" (click)="profile()">
                 Profile
             </a>
             <label class="breadcrumb-divider">
                 &nbsp;|&nbsp;
             </label>
-            <a class="link removeFriend" href="friendlist.html">
+            <a class="link removeFriend" (click)="removeFriend()">
                 <span>Remove Friend</span>
             </a>
         </div>
@@ -31,10 +31,10 @@
         </div>
         <div class="chat-new-message mElementM">
             <div class="mElement">
-                <input class="input-message input" placeholder="New Message" required>
+                <input class="input-message input" placeholder="New Message" required id="input" type="text" name="input" [(ngModel)]="input">
             </div>
             <div class="mElementM centerRow">
-                <button class="button-send button">Send</button>
+                <button class="button-send button" (click)="send()">Send</button>
             </div>
         </div>
     </div>
