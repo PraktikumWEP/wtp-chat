@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { BackendService } from 'src/app/services/backend.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterComponent implements OnInit {
     public password1Ok: boolean = false;
     public password2Ok: boolean = false;
 
-    public constructor(private service: BackendService) { 
+    public constructor(private router: Router, private service: BackendService) { 
     }
 
     public ngOnInit(): void {
@@ -78,8 +79,21 @@ export class RegisterComponent implements OnInit {
         }
     }
 
+    public changeRoute(route: string): void {
+        this.router.navigate([route])
+    }
+
     public register() {
-        console.log("we can click the button once there are no errors");
-        // call service
+        if (this.password1Ok && this.password2Ok && this.usernameOk) {
+            this.service.register(this.username, this.password1)
+            .subscribe((res: boolean) => {
+                if(res == true) {
+                    this.changeRoute('/friends');
+                }
+                else {
+                    console.error("couldnt register");
+                }
+            })
+        }
     }
 }

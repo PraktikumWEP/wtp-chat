@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
             .subscribe((res: boolean) => {
                 if(res) {
                     console.log("login successfull!");
+                    this.changeRoute('/friends');
                 }
                 else {
                     console.log("login failed!");
