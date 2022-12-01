@@ -31,22 +31,20 @@ export class RegisterComponent implements OnInit {
 
         if(this.username.length < minUsernameLength) {
             this.userError = "Username must be at least " + minUsernameLength + " characters";
-            //setErrorFor(username, message);
+            this.usernameOk = false;
         }
         else {
             this.service.userExists(this.username)
             .subscribe((res: boolean) => {
                 if(res == true) {
                     this.userError = "Username " + this.username + " is already taken";
-                    //setErrorFor(username, message);
+                    this.usernameOk = false;
                 }
                 else {
                     this.userError = "";
                     this.usernameOk = true;
                 }
             })
-            //this.userError = "";
-            //setSuccessFor(username);
         }
     }
 
@@ -55,11 +53,10 @@ export class RegisterComponent implements OnInit {
 
         if(this.password1.length < minPasswordLength) {
             this.passError1 = "Password must be at least " + minPasswordLength + " characters";
-            //setErrorFor(password1, message);
+            this.password1Ok = false;
         }
         else {
             this.passError1 = "";
-            //setSuccessFor(password1);
             this.password1Ok = true;
         }
     }
@@ -69,15 +66,14 @@ export class RegisterComponent implements OnInit {
 
         if(this.password1.length < minPasswordLength) {
             this.passError2 = "";
-            //setErrorFor(password2, message);
+            this.password2Ok = false;
         }
         else if(this.password1 !== this.password2) {
             this.passError2 = "Passwords do not match";
-            //setErrorFor(password2, message);
+            this.password2Ok = false;
         }
         else {
             this.passError2 = "";
-            //setSuccessFor(password2);
             this.password2Ok = true;
         }
     }

@@ -17,10 +17,10 @@
                         <label class="label-name" for="name">Username </label>
                     </div>
                     <div class="mElement">
-                        <input class="input" id="username" type="text" placeholder="Username" name="username" required [(ngModel)]="username" (keyup)="checkUsername()">
+                        <input [ngClass]="usernameOk ? 'input' : 'input input-error'" id="username" type="text" placeholder="Username" name="username" required [(ngModel)]="username" (keyup)="checkUsername()">
                     </div>
                     <div class="mElement hasSmall">
-                        <small class="error-message">{{ this.userError }}</small>
+                        <small class="error-message">{{ userError }}</small>
                     </div>
                 </div>
                 <div class="pass-box mElementM">
@@ -28,10 +28,10 @@
                         <label class="label-pass" for="password">Password </label>
                     </div>
                     <div class="mElement">
-                        <input class="input" id="password1" type="password" placeholder="Password" name="password1" required [(ngModel)]="password1" (keyup)="checkPassword1()">
+                        <input [ngClass]="password1Ok ? 'input' : 'input input-error'" id="password1" type="password" placeholder="Password" name="password1" required [(ngModel)]="password1" (keyup)="checkPassword1()">
                     </div>
                     <div class="mElement hasSmall">
-                        <small class="error-message">{{ this.passError1 }}</small>
+                        <small class="error-message">{{ passError1 }}</small>
                     </div>
                 </div>
                 <div class="pass-repeat-box mElementM">
@@ -39,10 +39,10 @@
                         <label class="label-pass-repeat" for="password-repeat">Confirm Password </label>
                     </div>
                     <div class="mElement">
-                        <input class="input" id="password2" type="password" placeholder="Confirm Password" name="password2" required [(ngModel)]="password2" (keyup)="checkPassword2()">
+                        <input [ngClass]="password2Ok ? 'input' : 'input input-error'" id="password2" type="password" placeholder="Confirm Password" name="password2" required [(ngModel)]="password2" (keyup)="checkPassword2()">
                     </div>
                     <div class="mElement hasSmall">
-                        <small class="error-message">{{ this.passError2 }}</small>
+                        <small class="error-message">{{ passError2 }}</small>
                     </div>
                 </div>
             </fieldset>
