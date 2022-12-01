@@ -1,5 +1,5 @@
-import { Component, Directive, OnInit, Input } from '@angular/core';
-import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors, AsyncValidator, ValidatorFn, FormGroup } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
     selector: 'app-register',
@@ -8,69 +8,82 @@ import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors, AsyncValid
 })
 
 export class RegisterComponent implements OnInit {
+    public username: string = '';
+    public password1: string = '';
+    public password2: string = '';
 
-    password1 = '';
-    password2 = '';
-    username = '';
+    public userError: string = "";
+    public passError1: string = "";
+    public passError2: string = "";
 
-    public constructor() { 
+    public usernameOk: boolean = false;
+    public password1Ok: boolean = false;
+    public password2Ok: boolean = false;
+
+    public constructor(private service: BackendService) { 
     }
 
     public ngOnInit(): void {
     }
 
-}
+    public checkUsername() {
+        const minUsernameLength = 3;
 
-@Directive({
-    selector: '[appForbiddenName]',
-    providers: [{
-        provide: NG_VALIDATORS,
-        useExisting: ForbiddenValidatorDirective,
-        multi: true
-    }]
-})
-
-export class ForbiddenValidatorDirective implements AsyncValidator {
-
-    @Input('appForbiddenName') forbiddenName = '';
-
-    validate(control: AbstractControl): ValidationErrors | null {
-        return this.forbiddenName ? forbiddenNameValidator(new RegExp(this.forbiddenName, 'i'))(control)
-                                  : null;
-      }
-}
-
-// check if passwords match
-@Directive({
-    selector: '[appMatch]',
-    providers: [{
-        provide: NG_VALIDATORS,
-        useExisting: MatchValidatorDirective,
-        multi: true
-    }]
-})
-
-export class MatchValidatorDirective implements Validator {
-
-    validate(control: AbstractControl): ValidationErrors | null {
-        return this.match ? matchValidator(pw1,pw2)(control) : null;
-    }
-}
-
-export function matchValidator(s1: String, s2: String): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-        let isValid = false;
-        if (control && control instanceof FormGroup) {
-            let group = control as FormGroup;
-            if (group.controls['pw1'].value == group.controls['pw2'].value) {
-                isValid = group.controls['pw1'].value == group.controls['pw2'].value;
-            }
-        }
-        if (isValid) {
-            return null;
+        if(this.username.length < minUsernameLength) {
+            this.userError = "Username must be at least " + minUsernameLength + " characters";
+            //setErrorFor(username, message);
         }
         else {
-            return {'passwordCheck': 'failed'}
+            this.service.userExists(this.username)
+            .subscribe((res: boolean) => {
+                if(res == true) {
+                    this.userError = "Username " + this.username + " is already taken";
+                    //setErrorFor(username, message);
+                }
+                else {
+                    this.userError = "";
+                    this.usernameOk = true;
+                }
+            })
+            //this.userError = "";
+            //setSuccessFor(username);
         }
+    }
+
+    public checkPassword1() {
+        const minPasswordLength = 8;
+
+        if(this.password1.length < minPasswordLength) {
+            this.passError1 = "Password must be at least " + minPasswordLength + " characters";
+            //setErrorFor(password1, message);
+        }
+        else {
+            this.passError1 = "";
+            //setSuccessFor(password1);
+            this.password1Ok = true;
+        }
+    }
+
+    public checkPassword2() {
+        const minPasswordLength = 8;
+
+        if(this.password1.length < minPasswordLength) {
+            this.passError2 = "";
+            //setErrorFor(password2, message);
+        }
+        else if(this.password1 !== this.password2) {
+            this.passError2 = "Passwords do not match";
+            //setErrorFor(password2, message);
+        }
+        else {
+            this.passError2 = "";
+            //setSuccessFor(password2);
+            this.password2Ok = true;
+        }
+    }
+
+    public register() {
+        console.log("we can click the button once there are no errors");
+        // call service
     }
 }

@@ -1,6 +1,6 @@
 <div class="background centerRow">
     <div class="register max-width centerRowV card">
-        <form method="GET" action="friendlist.html" id="registerForm" class="centerRowV" name="registerForm" appMatch #registerForm="ngForm">
+        <form method="GET" action="friendlist.html" id="registerForm" class="centerRowV" name="registerForm" #registerForm="ngForm">
             <div class="register-image">
                 <img src="./assets/images/user.png" alt="user" class="image">
             </div>
@@ -12,44 +12,37 @@
             </div>
             <fieldset class="register-inputs pContainerS mElement">
                 <legend class="register-inputs-text">Register</legend>
-                <!--Username-->
                 <div class="name-box mElementM">
                     <div class="mElement">
                         <label class="label-name" for="name">Username </label>
                     </div>
                     <div class="mElement">
-                        Username: <input class="input" type="text" placeholder="Username" name="username" required [(ngModel)]="username" #uname="ngModel">
+                        <input class="input" id="username" type="text" placeholder="Username" name="username" required [(ngModel)]="username" (keyup)="checkUsername()">
                     </div>
                     <div class="mElement hasSmall">
-                        <small class="error-message" *ngIf="uname.errors?.['required']">Name is required</small>
-                        <small class="error-message" *ngIf="uname.errors?.['minlength']">Name must be at least X characters long</small>
-                        <small class="error-message" *ngIf="uname.errors?.['forbiddenName']">Name X is already taken</small>
+                        <small class="error-message">{{ this.userError }}</small>
                     </div>
                 </div>
-                <!--Password-->
                 <div class="pass-box mElementM">
                     <div class="mElement">
                         <label class="label-pass" for="password">Password </label>
                     </div>
                     <div class="mElement">
-                        Password1: <input class="input" type="password" placeholder="Password" ngModelGroup="passwords" #passwords="ngModelGroup" name="pw1" required minlength="X" [(ngModel)]="password1" #pw1="ngModel">
+                        <input class="input" id="password1" type="password" placeholder="Password" name="password1" required [(ngModel)]="password1" (keyup)="checkPassword1()">
                     </div>
                     <div class="mElement hasSmall">
-                        <small class="error-message" *ngIf="pw1.errors?.['required']">Password is required</small>
-                        <small class="error-message" *ngIf="pw1.errors?.['minlength']">Password must be at least X characters long</small>
+                        <small class="error-message">{{ this.passError1 }}</small>
                     </div>
                 </div>
-                <!--Password repeat-->
                 <div class="pass-repeat-box mElementM">
                     <div class="mElement">
                         <label class="label-pass-repeat" for="password-repeat">Confirm Password </label>
                     </div>
                     <div class="mElement">
-                        Password2: <input class="input" type="password" placeholder="Password" ngModelGroup="passwords" #passwords="ngModelGroup" name="pw2" required [(ngModel)]="password2" #pw2="ngModel">
+                        <input class="input" id="password2" type="password" placeholder="Confirm Password" name="password2" required [(ngModel)]="password2" (keyup)="checkPassword2()">
                     </div>
                     <div class="mElement hasSmall">
-                        <small class="error-message" *ngIf="pw2.errors?.['required']">Password repeat is required</small>
-                        <small class="error-message" *ngIf="registerForm.errors?.['Match'] && (registerForm.touched || registerForm.dirty)">Passwords do not match</small>
+                        <small class="error-message">{{ this.passError2 }}</small>
                     </div>
                 </div>
             </fieldset>
@@ -58,7 +51,7 @@
                 <a href="login.html">
                     <button class="button-cancel button mElement">Cancel</button>
                 </a>
-                <button class="button-create button mElement">Create Account</button>
+                <button class="button-create button mElement" [disabled]="!usernameOk || !password1Ok || !password2Ok" (click)="register()">Create Account</button>
             </div>
         </form>
     </div>   

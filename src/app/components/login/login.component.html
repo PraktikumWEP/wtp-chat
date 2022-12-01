@@ -15,7 +15,7 @@
                         <label>Username</label>
                     </div>
                     <div class="mElement">
-                        <input type="text" placeholder="Username" class="input" required>
+                        <input name="username" type="text" placeholder="Username" class="input" required [(ngModel)]="username">
                     </div>
                 </div>
                 <div class="mElementM">
@@ -23,23 +23,19 @@
                         <label>Password</label>
                     </div>
                     <div class="mElement">
-                        <input type="password" placeholder="Password" class="input" required>
+                        <input name="password" type="password" placeholder="Password" class="input" required [(ngModel)]="password">
                     </div>
                 </div>
             </fieldset>
         </div>
 
         <div class="button-box mElement pContainerS">
-            <a href="friendlist.html">
-                <button type="button" class="button mElement">
-                    Login
-                </button>
-            </a>
-            <a href="register.html">
-                <button type="button" class="button mElement">
-                    Register
-                </button>
-            </a>
+            <button type="button" class="button mElement" (click)="login()">
+                Login
+            </button>
+            <button type="button" class="button mElement" (click)="changeRoute('/register')">
+                Register
+            </button>
         </div>
     </div>
 </div>
