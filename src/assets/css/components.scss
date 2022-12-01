@@ -171,13 +171,13 @@ $pContainerL: 4.25rem;
 }
 
 .chat-helper-div {
-    transform: rotateX(180deg);
+    /*transform: rotateX(180deg);*/
 }
 
 #chat {
     overflow-y: auto;
     max-height: 200px;
-    transform: rotateX(180deg);
+    /*transform: rotateX(180deg);*/
     /* scrollbar firefox */
     @-moz-document url-prefix() {
         scrollbar-color: #4f4f4f #fff;
