@@ -1,5 +1,5 @@
 import { Component, Directive, OnInit, Input } from '@angular/core';
-import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors } from '@angular/forms';
+import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors, AsyncValidator, ValidatorFn, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-register',
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
     }]
 })
 
-export class ForbiddenValidatorDirective implements Validator {
+export class ForbiddenValidatorDirective implements AsyncValidator {
 
     @Input('appForbiddenName') forbiddenName = '';
 
@@ -40,6 +40,7 @@ export class ForbiddenValidatorDirective implements Validator {
       }
 }
 
+// check if passwords match
 @Directive({
     selector: '[appMatch]',
     providers: [{
@@ -51,9 +52,25 @@ export class ForbiddenValidatorDirective implements Validator {
 
 export class MatchValidatorDirective implements Validator {
 
-    @Input('appMatch') match = '';
-
     validate(control: AbstractControl): ValidationErrors | null {
-        return;
+        return this.match ? matchValidator(pw1,pw2)(control) : null;
+    }
+}
+
+export function matchValidator(s1: String, s2: String): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        let isValid = false;
+        if (control && control instanceof FormGroup) {
+            let group = control as FormGroup;
+            if (group.controls['pw1'].value == group.controls['pw2'].value) {
+                isValid = group.controls['pw1'].value == group.controls['pw2'].value;
+            }
+        }
+        if (isValid) {
+            return null;
+        }
+        else {
+            return {'passwordCheck': 'failed'}
+        }
     }
 }

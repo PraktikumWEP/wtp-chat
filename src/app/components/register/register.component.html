@@ -1,6 +1,6 @@
 <div class="background centerRow">
     <div class="register max-width centerRowV card">
-        <form method="GET" action="friendlist.html" id="registerForm" class="centerRowV" name="registerForm">
+        <form method="GET" action="friendlist.html" id="registerForm" class="centerRowV" name="registerForm" appMatch #registerForm="ngForm">
             <div class="register-image">
                 <img src="./assets/images/user.png" alt="user" class="image">
             </div>
@@ -32,7 +32,7 @@
                         <label class="label-pass" for="password">Password </label>
                     </div>
                     <div class="mElement">
-                        Password1: <input class="input" type="password" placeholder="Password" name="password1" required minlength="X" [(ngModel)]="password1" #pw1="ngModel">
+                        Password1: <input class="input" type="password" placeholder="Password" ngModelGroup="passwords" #passwords="ngModelGroup" name="pw1" required minlength="X" [(ngModel)]="password1" #pw1="ngModel">
                     </div>
                     <div class="mElement hasSmall">
                         <small class="error-message" *ngIf="pw1.errors?.['required']">Password is required</small>
@@ -45,11 +45,11 @@
                         <label class="label-pass-repeat" for="password-repeat">Confirm Password </label>
                     </div>
                     <div class="mElement">
-                        Password2: <input class="input" type="password" placeholder="Confirm Password" name="password2" required [(ngModel)]="password2" #pw2="ngModel">
+                        Password2: <input class="input" type="password" placeholder="Password" ngModelGroup="passwords" #passwords="ngModelGroup" name="pw2" required [(ngModel)]="password2" #pw2="ngModel">
                     </div>
                     <div class="mElement hasSmall">
                         <small class="error-message" *ngIf="pw2.errors?.['required']">Password repeat is required</small>
-                        <small class="error-message" *ngIf="pw2.errors?.['match']">Passwords do not match</small>
+                        <small class="error-message" *ngIf="registerForm.errors?.['Match'] && (registerForm.touched || registerForm.dirty)">Passwords do not match</small>
                     </div>
                 </div>
             </fieldset>
