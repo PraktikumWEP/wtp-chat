@@ -1,5 +1,5 @@
-import { Component, Directive, OnInit, Input, Directive } from '@angular/core';
-import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors, Validators } from '@angular/forms';
+import { Component, Directive, OnInit, Input } from '@angular/core';
+import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors } from '@angular/forms';
 
 @Component({
     selector: 'app-register',
