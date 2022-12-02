@@ -7,6 +7,7 @@ import { Message } from 'src/app/models/Message';
 import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
 import { RendererFactory2, Injectable } from '@angular/core';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-chat',
@@ -19,12 +20,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     public messages: Array<Message> = [];
     public otherUser: string = ''; // GET PASSED FROM FRIENDS
     public input: string = '';
-    public inline: boolean = true; // GET FROM SETTINGS COMPONENT
 
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
-     public constructor(private renderer: Renderer2, private router: Router, private interval: IntervalService, private service: BackendService) { 
+     public constructor(private settings: SettingsService, private renderer: Renderer2, private router: Router, private interval: IntervalService, private service: BackendService) { 
         this.myScrollContainer = new ElementRef(null);
     }
 
@@ -94,7 +94,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         let timestring = t.toLocaleTimeString("de-DE");
 
         // check inline attribute
-        if (this.inline) {
+        if (this.settings.getInline()) {
             this.createMessageElementInline(msg, from, timestring);
         }
         else {
@@ -136,7 +136,33 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     // render chat message in two lines
     public createMessageElementDualline(msg: string, from: string, time: string): void {
-        // CODE FOR DUAL LINE RENDERING
+         // render outer div
+         const chat_message = this.renderer.createElement('div');
+         this.renderer.setProperty(chat_message, 'class', 'chat-message mElement');
+         this.renderer.appendChild(document.getElementById('chat'), chat_message);
+ 
+         // render helper div
+         const chat_helper_div = this.renderer.createElement('div');
+         this.renderer.setProperty(chat_helper_div, 'class', 'chat-helper-div-column');
+         this.renderer.appendChild(chat_message, chat_helper_div);
+ 
+         // render username
+         const chat_message_user = this.renderer.createElement('span');
+         this.renderer.setProperty(chat_message_user, 'class', 'chat-message-user');
+         this.renderer.appendChild(chat_helper_div, chat_message_user);
+         this.renderer.setValue(chat_message_user, from + ":&nbsp");
+ 
+         // render message text
+         const chat_message_text = this.renderer.createElement('span');
+         this.renderer.setProperty(chat_message_text, 'class', 'chat-message-text');
+         this.renderer.appendChild(chat_helper_div, chat_message_text);
+         this.renderer.setValue(chat_message_text, "&nbsp" + msg);
+ 
+         // render timestamp
+         const time_div = this.renderer.createElement('div');
+         this.renderer.setProperty(time_div, 'class', 'time chat-helper-div');
+         this.renderer.appendChild(chat_message, time_div);
+         this.renderer.setValue(time_div, time);
     }
 
     // clear chat history
