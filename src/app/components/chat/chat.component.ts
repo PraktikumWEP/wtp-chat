@@ -1,12 +1,9 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
-import { interval, Observable } from 'rxjs';
 import { IntervalService } from 'src/app/services/interval.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { Message } from 'src/app/models/Message';
-import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
-import { RendererFactory2, Injectable } from '@angular/core';
 import { Profile } from 'src/app/models/Profile';
 import { ContextService } from 'src/app/services/context.service';
 
@@ -21,9 +18,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     public messages: Array<Message> = [];
     public otherUser: string = this.context.currentChatUsername;
     public input: string = '';
-    public msgs: string[] = [];
-    public times: number[] = [];
-    public froms: string[] = [];
 
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
@@ -33,7 +27,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.interval.setInterval("chat", () => {
             this.service.listMessages(this.otherUser).subscribe((data: Message[]) => { 
                 this.messages = data;
-             });
+            });
             this.show(this.messages);
             this.scrollToBottom();
         });
@@ -57,7 +51,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     // send button
     public send(): void {
-        console.log(this.input);
         this.service.sendMessage(this.otherUser, this.input)
             .subscribe(
                 // do nothing
@@ -117,62 +110,66 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         // render outer div
         const chat_message = this.renderer.createElement('div');
-        this.renderer.setProperty(chat_message, 'class', 'chat-message mElement');
+        this.renderer.addClass(chat_message, 'chat-message');
+        this.renderer.addClass(chat_message, 'mElement');
         this.renderer.appendChild(document.getElementById('chat'), chat_message);
 
         // render helper div
         const chat_helper_div = this.renderer.createElement('div');
-        this.renderer.setProperty(chat_helper_div, 'class', 'chat-helper-div');
+        this.renderer.addClass(chat_helper_div, 'chat-helper-div');
         this.renderer.appendChild(chat_message, chat_helper_div);
 
         // render username
         const chat_message_user = this.renderer.createElement('span');
-        this.renderer.setProperty(chat_message_user, 'class', 'chat-message-user');
+        this.renderer.addClass(chat_message_user, 'chat-message-user');
         this.renderer.appendChild(chat_helper_div, chat_message_user);
-        this.renderer.setValue(chat_message_user, from + ":&nbsp");
+        chat_message_user.innerHTML = from + ":&nbsp";
 
         // render message text
         const chat_message_text = this.renderer.createElement('span');
-        this.renderer.setProperty(chat_message_text, 'class', 'chat-message-text');
+        this.renderer.addClass(chat_message_text, 'chat-message-text');
         this.renderer.appendChild(chat_helper_div, chat_message_text);
-        this.renderer.setValue(chat_message_text, msg);
+        chat_message_text.innerHTML = msg;
 
         // render timestamp
         const time_div = this.renderer.createElement('div');
-        this.renderer.setProperty(time_div, 'class', 'time chat-helper-div');
+        this.renderer.addClass(time_div, 'time');
+        this.renderer.addClass(time_div, 'chat-helper-div');
         this.renderer.appendChild(chat_message, time_div);
-        this.renderer.setValue(time_div, time);
+        time_div.innerHTML = time;
     }
 
     // render chat message in two lines
     public createMessageElementDualline(msg: string, from: string, time: string): void {
          // render outer div
          const chat_message = this.renderer.createElement('div');
-         this.renderer.setProperty(chat_message, 'class', 'chat-message mElement');
+         this.renderer.addClass(chat_message, 'chat-message');
+         this.renderer.addClass(chat_message, 'mElement');
          this.renderer.appendChild(document.getElementById('chat'), chat_message);
  
          // render helper div
          const chat_helper_div = this.renderer.createElement('div');
-         this.renderer.setProperty(chat_helper_div, 'class', 'chat-helper-div-column');
+         this.renderer.addClass(chat_helper_div, 'chat-helper-div-column');
          this.renderer.appendChild(chat_message, chat_helper_div);
  
          // render username
          const chat_message_user = this.renderer.createElement('span');
-         this.renderer.setProperty(chat_message_user, 'class', 'chat-message-user');
+         this.renderer.addClass(chat_message_user, 'chat-message-user');
          this.renderer.appendChild(chat_helper_div, chat_message_user);
-         this.renderer.setValue(chat_message_user, from + ":&nbsp");
+         chat_message_user.innerHTML = from + ":&nbsp";
  
          // render message text
          const chat_message_text = this.renderer.createElement('span');
-         this.renderer.setProperty(chat_message_text, 'class', 'chat-message-text');
+         this.renderer.addClass(chat_message_text, 'chat-message-text');
          this.renderer.appendChild(chat_helper_div, chat_message_text);
-         this.renderer.setValue(chat_message_text, "&nbsp" + msg);
+         chat_message_text.innerHTML = "&nbsp" + msg;
  
          // render timestamp
          const time_div = this.renderer.createElement('div');
-         this.renderer.setProperty(time_div, 'class', 'time chat-helper-div');
+         this.renderer.addClass(time_div, 'time');
+         this.renderer.addClass(time_div, 'chat-helper-div');
          this.renderer.appendChild(chat_message, time_div);
-         this.renderer.setValue(time_div, time);
+         time_div.innerHTML = time;
     }
 
     // clear chat history
