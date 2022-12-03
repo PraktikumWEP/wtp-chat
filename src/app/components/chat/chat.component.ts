@@ -21,12 +21,22 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     public messages: Array<Message> = [];
     public otherUser: string = this.context.currentChatUsername;
     public input: string = '';
+    public msgs: string[] = [];
+    public times: number[] = [];
+    public froms: string[] = [];
 
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
      public constructor( private context: ContextService, private renderer: Renderer2, private router: Router, private interval: IntervalService, private service: BackendService) { 
         this.myScrollContainer = new ElementRef(null);
+        this.interval.setInterval("chat", () => {
+            this.service.listMessages(this.otherUser).subscribe((data: Message[]) => { 
+                this.messages = data;
+             });
+            this.show(this.messages);
+            this.scrollToBottom();
+        });
     }
 
     public ngAfterViewChecked() {        
@@ -43,18 +53,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     public ngOnInit(): void {
         this.scrollToBottom();
-        this.interval.setInterval("chat", () => {
-            this.service.listMessages(this.otherUser).subscribe((data: Message[]) => { 
-                this.messages = data;
-             });
-            this.show(this.messages);
-            this.scrollToBottom();
-        });
     }
 
     // send button
     public send(): void {
-        this.service.sendMessage(this.otherUser, this.input);
+        console.log(this.input);
+        this.service.sendMessage(this.otherUser, this.input)
+            .subscribe(
+                // do nothing
+            )
         this.input = '';
     }
 
@@ -77,6 +84,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     // helper for routing
     public changeRoute(route: string): void {
+        this.interval.clearIntervals();
         this.router.navigate([route])
     }
 

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Friend } from 'src/app/models/Friend';
 import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
+import { ContextService } from 'src/app/services/context.service';
 import { IntervalService } from 'src/app/services/interval.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class FriendsComponent implements OnInit {
     public searchList: string[] = [];
     public friendError: string = "";
 
-    public constructor(private router: Router, private service: BackendService, private interval: IntervalService) {
+    public constructor(private router: Router, private service: BackendService, private interval: IntervalService, private context: ContextService) {
         this.service.loadCurrentUser()
             .subscribe((res: User | null) => {
                 if(res != null) {
@@ -35,8 +36,13 @@ export class FriendsComponent implements OnInit {
 
     public ngOnInit(): void {
     }
+
+    public switchChat(route: string, friend: string): void {
+        this.context.currentChatUsername = friend;
+        this.changeRoute(route);
+    }
     
-    public changeRoute(route: string): void {
+    public changeRoute(route: string, ): void {
         this.interval.clearIntervals();
         this.router.navigate([route]);
     }

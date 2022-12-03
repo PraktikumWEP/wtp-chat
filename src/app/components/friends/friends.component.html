@@ -13,7 +13,7 @@
             <section>
                 <ul>
                     <li *ngFor="let friend of friends">
-                        <a class="link" (click)="changeRoute('/chat')">{{ friend }}</a>
+                        <a class="link" (click)="switchChat('/chat', friend)">{{ friend }}</a>
                         <label class="notification-count">0</label>
                     </li>
                 </ul>
