@@ -8,6 +8,7 @@ import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
 import { RendererFactory2, Injectable } from '@angular/core';
 import { Profile } from 'src/app/models/Profile';
+import { ContextService } from 'src/app/services/context.service';
 
 @Component({
   selector: 'app-chat',
@@ -18,13 +19,13 @@ import { Profile } from 'src/app/models/Profile';
 export class ChatComponent implements OnInit, AfterViewChecked {
 
     public messages: Array<Message> = [];
-    public otherUser: string = ''; // GET PASSED FROM FRIENDS
+    public otherUser: string = this.context.currentChatUsername;
     public input: string = '';
 
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
-     public constructor( private renderer: Renderer2, private router: Router, private interval: IntervalService, private service: BackendService) { 
+     public constructor( private context: ContextService, private renderer: Renderer2, private router: Router, private interval: IntervalService, private service: BackendService) { 
         this.myScrollContainer = new ElementRef(null);
     }
 
@@ -95,7 +96,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         // check inline attribute
         
-       if (true) { // HIER
+       if (true) { // HIER NIX GUT
             this.createMessageElementInline(msg, from, timestring);
         }
         else {

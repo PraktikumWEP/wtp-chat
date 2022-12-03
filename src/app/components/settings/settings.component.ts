@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/User';
 import { Profile } from 'src/app/models/Profile';
 import { BackendService } from 'src/app/services/backend.service';
 import { Router } from '@angular/router';

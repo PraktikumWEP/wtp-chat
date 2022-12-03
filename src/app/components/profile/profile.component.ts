@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
+import { ContextService } from 'src/app/services/context.service';
 
 
 @Component({
@@ -10,12 +11,12 @@ import { BackendService } from 'src/app/services/backend.service';
 })
 export class ProfileComponent implements OnInit {
 
-    otherUser: string = '';
+    otherUser: string = this.context.currentChatUsername;
     description: string = '';
     coffeeOrTea: string = '';
     name = '';
 
-    public constructor(private service: BackendService, private router: Router) { 
+    public constructor(private service: BackendService, private router: Router, private context: ContextService) { 
     }
 
     public ngOnInit(): void {
