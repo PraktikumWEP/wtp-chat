@@ -4,29 +4,17 @@
             <h1>Friends</h1>
         </div>
         <div class="breadcrumb mElement">
-            <a [routerLink]="['/logout']" class="link">&lt; Logout</a>
+            <a class="link" (click)="changeRoute('/logout')">&lt; Logout</a>
             <label class="breadcrumb-divider">&nbsp;|&nbsp;</label>
-            <a [routerLink]="['/settings']" class="link">Settings</a>
+            <a class="link" (click)="changeRoute('/settings')">Settings</a>
         </div>
         <hr class="friendlist-divider ">
         <div class="mElementM">
             <section>
                 <ul>
-                    <li>
-                        <a href="chat.html" class="link">Tom</a>
-                        <label class="notification-count">3</label>
-                    </li>
-                    <li>
-                        <a href="chat.html" class="link">Marvin</a>
-                        <label class="notification-count">1</label>
-                    </li>
-                    <li>
-                        <a href="chat.html" class="link">Tick</a>
-                        <label class="notification-count"></label>
-                    </li>
-                    <li>
-                        <a href="chat.html" class="link">Trick</a>
-                        <label class="notification-count"></label>
+                    <li *ngFor="let friend of friends">
+                        <a class="link" (click)="changeRoute('/chat')">{{ friend }}</a>
+                        <label class="notification-count">0</label>
                     </li>
                 </ul>
             </section>
@@ -37,26 +25,32 @@
                 <div class="mElement">
                     <h2>New Requests</h2>
                 </div>
-                <div>
-                    <ol>
-                        <li><a href="http://github.com/PraktikumWEP" class="link">Friend request from Track</a></li>
+                <div class="centerRow">
+                    <ol *ngIf="friendReqs.length > 0">
+                        <li *ngFor="let req of friendReqs">
+                            <a class="link">Friend request from {{ req }}</a>
+                            <div class="centerCol mElement">
+                                <button class="button-small centerRow" (click)="acceptFriend(req)">Accept</button>
+                                <button class="button-small centerRow" (click)="acceptFriend(req)">Decline</button>
+                            </div>
+                        </li>
                     </ol>
+                    <div *ngIf="friendReqs.length == 0">No friend requests</div>
                 </div>
             </section>
         </div>
         <hr class="friendlist-divider">
         <div class="mElementM">
             <div class="mElement">
+                <small class="error-message mElement">{{ friendError }}</small>
                 <div class="mElement">
                     <input type="name" placeholder="Name" class="input" required [(ngModel)]="searchValue" (keyup)="searchFriend()"/>
-                    <div class="suggested-friends">
-                        <div *ngIf="searchList.length > 0">
-                            <div *ngFor="let friend of searchList" class="mElement suggested-friends-entry" ()>{{ friend }}</div>
-                        </div>
+                    <div class="suggested-friends" *ngIf="searchList.length > 0">
+                        <div *ngFor="let friend of searchList" class="mElement suggested-friends-entry" (click)="autoComplete(friend)">{{ friend }}</div>
                     </div>
                 </div>
                 <div class="mElementM">
-                    <button class="button">
+                    <button class="button" (click)="addFriend()">
                         Add
                     </button>
                 </div>

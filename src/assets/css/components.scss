@@ -51,6 +51,27 @@ $pContainerL: 4.25rem;
     color: $light;
 }
 
+.button-small {
+    font-size: 12px;
+    background-color: $primary;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 0 0;
+    text-transform: "lowercase";
+    transition: 0.30s;
+    color: $secondary;
+    width: 100px;
+    padding: 7px 25px 7px 25px;
+    border: none;
+    font-weight: bold;
+}
+
+.button-small:hover {
+    background-color: $secondary;
+    box-shadow: 0 0 0 0;
+    transition: 0.30s;
+    color: $light;
+}
+
 .breadcrumb {
     width: max-content;
     margin-bottom: 2rem;
@@ -62,8 +83,10 @@ $pContainerL: 4.25rem;
 
 .link {
     color: $primary;
+    text-decoration: underline;
     transition: text-shadow .30s;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .link:hover {
@@ -194,7 +217,7 @@ $pContainerL: 4.25rem;
     border: 2px solid black;
     border-radius: 4px;
     overflow: hidden;
-    display: none;
+    display: block;
 }
 
 .suggested-friends-entry:hover {

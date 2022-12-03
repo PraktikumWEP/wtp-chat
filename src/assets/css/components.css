@@ -39,6 +39,27 @@
   color: #FFFFFF;
 }
 
+.button-small {
+  font-size: 12px;
+  background-color: #DB9D47;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 0 0;
+  text-transform: "lowercase";
+  transition: 0.3s;
+  color: #1B1B27;
+  width: 100px;
+  padding: 7px 25px 7px 25px;
+  border: none;
+  font-weight: bold;
+}
+
+.button-small:hover {
+  background-color: #1B1B27;
+  box-shadow: 0 0 0 0;
+  transition: 0.3s;
+  color: #FFFFFF;
+}
+
 .breadcrumb {
   width: -webkit-max-content;
   width: -moz-max-content;
@@ -52,8 +73,10 @@
 
 .link {
   color: #DB9D47;
+  text-decoration: underline;
   transition: text-shadow 0.3s;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .link:hover {
@@ -193,7 +216,7 @@
   border: 2px solid black;
   border-radius: 4px;
   overflow: hidden;
-  display: none;
+  display: block;
 }
 
 .suggested-friends-entry:hover {

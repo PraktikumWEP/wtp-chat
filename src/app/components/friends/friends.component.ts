@@ -12,9 +12,11 @@ import { IntervalService } from 'src/app/services/interval.service';
 })
 export class FriendsComponent implements OnInit {
     public user: User = new User();
-    public friends: Friend[] = [];
+    public friends: string[] = [];
+    public friendReqs: string[] = [];
     public searchValue: string = "";
     public searchList: string[] = [];
+    public friendError: string = "";
 
     public constructor(private router: Router, private service: BackendService, private interval: IntervalService) {
         this.service.loadCurrentUser()
@@ -24,53 +26,81 @@ export class FriendsComponent implements OnInit {
                     console.log(this.user);
                 }
                 else {
-                    //this.router.navigate(["/"]);
+                    this.changeRoute("/");
                 }
             })
 
-        //this.interval.setInterval("test", () => this.services());
+        this.interval.setInterval("friends", () => this.services());
     }
 
-    public services() {
+    public ngOnInit(): void {
+    }
+    
+    public changeRoute(route: string): void {
+        this.interval.clearIntervals();
+        this.router.navigate([route]);
+    }
+
+    public services(): void {
         this.service.loadFriends()
             .subscribe((res: Array<Friend>) => {
+                let nameList: string[] = [];
+                let reqList: string[] = [];
+
+                res.forEach((friend: Friend) => {
+                    nameList.push(friend.username);
+                    if(friend.status == "requested") {
+                        reqList.push(friend.username);
+                    }
+                }); 
+
+                this.friends = nameList;
+                this.friendReqs = reqList;
+                console.log(res);
+            })
+
+        this.service.unreadMessageCounts()
+            .subscribe((res: Map<string, number>) => {
                 console.log(res);
             })
     }
 
-    public searchFriend() {
+    public searchFriend(): void {
         let friends: string[] = [];
 
         this.service.listUsers()
             .subscribe((res: Array<string>) => {
                 friends = res;
-                console.log(friends);
-                this.searchList = friends.filter(friend => {
+                this.searchList = friends.filter((friend: string): any => {
                     if(this.searchValue.length > 0) {
                         if(friend.includes(this.searchValue)) {
-                            console.log(friend);
-                            return friend;
+                            if(!friend.includes(this.user.username)) {
+                                return friend;
+                            }
                         }
                     }
                 })
-                console.log(this.searchList);
         })
-
     }
 
-    
-         /*   // add click handler on each entry for auto complete
-            list.childNodes.forEach(child => {
-                child.addEventListener("click", () => {
-                    input.value = child.innerHTML
-                    list.style.display = "none";
-                    list.innerHTML = "";
-                    input.className = 'input';
-                }) 
+    public autoComplete(friend: string): void {
+        this.searchValue = friend;
+    }
+
+    public addFriend(): void {
+        this.service.friendRequest(this.searchValue)
+            .subscribe((res: boolean) => {
+                console.log("add friend send" + res);
             })
-        } */
+    }
 
+    public acceptFriend(username: string): void {
+        this.service.acceptFriendRequest(username)
+            .subscribe()
+    }
 
-    public ngOnInit(): void {
+    public dismissFriend(username: string): void {
+        this.service.dismissFriendRequest(username)
+            .subscribe()
     }
 }
