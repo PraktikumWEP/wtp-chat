@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     public messages: Array<Message> = [];
     public otherUser: string = this.context.currentChatUsername;
     public input: string = '';
+    public inline: boolean = true;
 
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
@@ -95,19 +96,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         let t = new Date(time);
         let timestring = t.toLocaleTimeString("de-DE");
 
-        // check inline attribute
-        
-       if (true) { // HIER NIX GUT
-            this.createMessageElementInline(msg, from, timestring);
-        }
-        else {
-            this.createMessageElementDualline(msg, from, timestring);
-        }
-    }
-
-    // render chat message in one line
-    public createMessageElementInline(msg: string, from: string, time: string): void {
-
         // render outer div
         const chat_message = this.renderer.createElement('div');
         this.renderer.addClass(chat_message, 'chat-message');
@@ -116,7 +104,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         // render helper div
         const chat_helper_div = this.renderer.createElement('div');
-        this.renderer.addClass(chat_helper_div, 'chat-helper-div');
+        
         this.renderer.appendChild(chat_message, chat_helper_div);
 
         // render username
@@ -129,48 +117,28 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         const chat_message_text = this.renderer.createElement('span');
         this.renderer.addClass(chat_message_text, 'chat-message-text');
         this.renderer.appendChild(chat_helper_div, chat_message_text);
-        chat_message_text.innerHTML = msg;
+        
 
         // render timestamp
         const time_div = this.renderer.createElement('div');
         this.renderer.addClass(time_div, 'time');
         this.renderer.addClass(time_div, 'chat-helper-div');
         this.renderer.appendChild(chat_message, time_div);
-        time_div.innerHTML = time;
+        time_div.innerHTML = timestring;
+
+        // conditional inline
+        if (this.inline) {
+            this.renderer.addClass(chat_helper_div, 'chat-helper-div');
+            chat_message_text.innerHTML = msg;
+        }
+        else {
+            this.renderer.addClass(chat_helper_div, 'chat-helper-div-column');
+            chat_message_text.innerHTML = "&nbsp" + msg;
+        }
+
     }
 
-    // render chat message in two lines
-    public createMessageElementDualline(msg: string, from: string, time: string): void {
-         // render outer div
-         const chat_message = this.renderer.createElement('div');
-         this.renderer.addClass(chat_message, 'chat-message');
-         this.renderer.addClass(chat_message, 'mElement');
-         this.renderer.appendChild(document.getElementById('chat'), chat_message);
- 
-         // render helper div
-         const chat_helper_div = this.renderer.createElement('div');
-         this.renderer.addClass(chat_helper_div, 'chat-helper-div-column');
-         this.renderer.appendChild(chat_message, chat_helper_div);
- 
-         // render username
-         const chat_message_user = this.renderer.createElement('span');
-         this.renderer.addClass(chat_message_user, 'chat-message-user');
-         this.renderer.appendChild(chat_helper_div, chat_message_user);
-         chat_message_user.innerHTML = from + ":&nbsp";
- 
-         // render message text
-         const chat_message_text = this.renderer.createElement('span');
-         this.renderer.addClass(chat_message_text, 'chat-message-text');
-         this.renderer.appendChild(chat_helper_div, chat_message_text);
-         chat_message_text.innerHTML = "&nbsp" + msg;
- 
-         // render timestamp
-         const time_div = this.renderer.createElement('div');
-         this.renderer.addClass(time_div, 'time');
-         this.renderer.addClass(time_div, 'chat-helper-div');
-         this.renderer.appendChild(chat_message, time_div);
-         time_div.innerHTML = time;
-    }
+         
 
     // clear chat history
     public clearMessages(): void {
