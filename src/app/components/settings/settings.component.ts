@@ -11,16 +11,16 @@ import { Router } from '@angular/router';
     styleUrls: ['../../../assets/css/components.css']
 })
 export class SettingsComponent implements OnInit {
-
     firstName: string = '';
     lastName: string = '';
-    coffeeOrTea: string = '';
+    coffeeOrTea: string = 'Neither';
     description: string = '';
     inlineString: string = '';
     duallineString: string = '';
     inline: boolean = true;
 
-    public constructor(private service: BackendService, private router: Router) {}
+    public constructor(private service: BackendService, private router: Router) {
+    }
 
     public ngOnInit(): void {
     }
