@@ -7,7 +7,7 @@ import { Message } from 'src/app/models/Message';
 import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
 import { RendererFactory2, Injectable } from '@angular/core';
-//import { SettingsService } from 'src/app/services/settings.service';
+import { Profile } from 'src/app/models/Profile';
 
 @Component({
   selector: 'app-chat',
@@ -94,12 +94,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         let timestring = t.toLocaleTimeString("de-DE");
 
         // check inline attribute
-       /* if (this.settings.getInline()) {
+        
+       if (true) { // HIER
             this.createMessageElementInline(msg, from, timestring);
         }
         else {
             this.createMessageElementDualline(msg, from, timestring);
-        } */
+        }
     }
 
     // render chat message in one line

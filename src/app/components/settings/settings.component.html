@@ -5,74 +5,72 @@
                 Profile Settings
             </h1>
         </div>
-        <form>
-            <div class="mElement">
-                <fieldset class="pContainerS">
-                    <legend>Base Data</legend>
-                    <div class="mElementM">
-                        <div class="mElement">
-                            <label>First Name</label>
-                        </div>
-                        <div class="mElement">
-                            <input type="text" placeholder="Your name" class="input" required/>
-                        </div>
+        <div class="mElement">
+            <fieldset class="pContainerS">
+                <legend>Base Data</legend>
+                <div class="mElementM">
+                    <div class="mElement">
+                        <label>First Name</label>
                     </div>
-                    <div class="mElementM">
-                        <div class="mElement">
-                            <label>Last Name</label>
-                        </div>
-                        <div class="mElement">
-                            <input type="text" placeholder="Your surname" class="input" required/>
-                        </div>
+                    <div class="mElement">
+                        <input type="text" placeholder="Your name" class="input" required [(ngModel)]="firstName"/>
                     </div>
-                    <div class="mElementM">
-                        <label>Coffee or Tea?</label>
-                        <select>
-                            <option value="Neither">Neither</option>
-                            <option value="Coffee">Coffee</option>
-                            <option value="Tea">Tea</option>
-                            <option value="Both">Both</option>
-                        </select>
+                </div>
+                <div class="mElementM">
+                    <div class="mElement">
+                        <label>Last Name</label>
                     </div>
-                </fieldset>
-            </div>
+                    <div class="mElement">
+                        <input type="text" placeholder="Your surname" class="input" required [(ngModel)]="lastName"/>
+                    </div>
+                </div>
+                <div class="mElementM">
+                    <label>Coffee or Tea?</label>
+                    <select [(ngModel)]="coffeeOrTea">
+                        <option value="Neither">Neither</option>
+                        <option value="Coffee">Coffee</option>
+                        <option value="Tea">Tea</option>
+                        <option value="Both">Both</option>
+                    </select>
+                </div>
+            </fieldset>
+        </div>
 
-            <div class="mElementM">
-                <fieldset class="pContainerS">
-                    <legend>Tell Something about you</legend>
-                    <div class="mElement">
-                        <textarea placeholder="Leave a comment here" class="input textarea"></textarea>
-                    </div>
-                </fieldset>
-            </div>
+        <div class="mElementM">
+            <fieldset class="pContainerS">
+                <legend>Tell Something about you</legend>
+                <div class="mElement">
+                    <textarea placeholder="Leave a comment here" class="input textarea" [(ngModel)]="description"></textarea>
+                </div>
+            </fieldset>
+        </div>
             
-            <div class="mElement">
-                <fieldset class="pContainerS">
-                    <legend>Preferred Chat Layout</legend>
+        <div class="mElement">
+            <fieldset class="pContainerS">
+                <legend>Preferred Chat Layout</legend>
+                <div class="mElement">
                     <div class="mElement">
-                        <div class="mElement">
-                            <input type="radio" name="layout" checked="checked" required ngModel value=true/>
-                            <label for="layout1">Username and message in one line</label>
-                        </div>
-                        <div class="mElement">
-                            <input type="radio" name="layout" required ngModel inline=false/>
-                            <label for="layout2">Username and message in seperated lines</label>
-                        </div>
+                        <input type="radio" name="layout" checked="checked" required (click)="setInline()"/>
+                        <label for="layout1">Username and message in one line</label>
                     </div>
-                </fieldset>
-            </div>
-            <div class="button-box mElement pContainerS">
-                <a href="friendlist.html">
-                    <button class="button mElement">
-                        Cancel
-                    </button>
-                </a>
-                <a href="">
-                    <button class="button mElement">
-                        Save
-                    </button>
-                </a>
-            </div>
-        </form>
+                    <div class="mElement">
+                        <input type="radio" name="layout" required (click)="setDualLine()"/>
+                        <label for="layout2">Username and message in seperated lines</label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="button-box mElement pContainerS">
+            <a (click)="friends()">
+                <button class="button mElement">
+                    Cancel
+                </button>
+            </a>
+            <a (click)="saveSettings()">
+                <button class="button mElement">
+                    Save
+                </button>
+            </a>
+        </div>
     </div>
 </div>
