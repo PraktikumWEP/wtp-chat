@@ -7,7 +7,7 @@ import { Message } from 'src/app/models/Message';
 import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
 import { RendererFactory2, Injectable } from '@angular/core';
-import { SettingsService } from 'src/app/services/settings.service';
+//import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-chat',
@@ -24,7 +24,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
-     public constructor(private settings: SettingsService, private renderer: Renderer2, private router: Router, private interval: IntervalService, private service: BackendService) { 
+     public constructor( private renderer: Renderer2, private router: Router, private interval: IntervalService, private service: BackendService) { 
         this.myScrollContainer = new ElementRef(null);
     }
 
@@ -94,12 +94,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         let timestring = t.toLocaleTimeString("de-DE");
 
         // check inline attribute
-        if (this.settings.getInline()) {
+       /* if (this.settings.getInline()) {
             this.createMessageElementInline(msg, from, timestring);
         }
         else {
             this.createMessageElementDualline(msg, from, timestring);
-        }
+        } */
     }
 
     // render chat message in one line

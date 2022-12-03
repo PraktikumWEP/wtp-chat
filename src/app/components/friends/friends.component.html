@@ -46,20 +46,21 @@
         </div>
         <hr class="friendlist-divider">
         <div class="mElementM">
-            <form method="GET" action="chat.html" name="addFriend">
+            <div class="mElement">
                 <div class="mElement">
-                    <div class="mElement">
-                        <input type="name" placeholder="Name" class="input" required/>
-                        <div class="suggested-friends">
+                    <input type="name" placeholder="Name" class="input" required [(ngModel)]="searchValue" (keyup)="searchFriend()"/>
+                    <div class="suggested-friends">
+                        <div *ngIf="searchList.length > 0">
+                            <div *ngFor="let friend of searchList" class="mElement suggested-friends-entry" ()>{{ friend }}</div>
                         </div>
                     </div>
-                    <div class="mElementM">
-                        <button class="button">
-                            Add
-                        </button>
-                    </div>
                 </div>
-            </form>
+                <div class="mElementM">
+                    <button class="button">
+                        Add
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
