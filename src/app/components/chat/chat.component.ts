@@ -5,6 +5,7 @@ import { BackendService } from 'src/app/services/backend.service';
 import { Message } from 'src/app/models/Message';
 import { Router } from '@angular/router';
 import { ContextService } from 'src/app/services/context.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-chat',
@@ -18,6 +19,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     public otherUser: string = this.context.currentChatUsername;
     public input: string = '';
     public inline: boolean = true;
+    public user: any = new Object();
 
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
@@ -31,6 +33,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             this.show(this.messages);
             this.scrollToBottom();
         });
+        this.service.loadCurrentUser()
+            .subscribe((res) => {
+                if(res != null) {
+                    this.user = res;
+                    this.inline = (this.user.layout === 'inline') ? true : false;
+                }
+            })
     }
 
     public ngAfterViewChecked() {        

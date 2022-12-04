@@ -180,6 +180,9 @@
 .chat-message {
   display: grid;
   grid-template-columns: 7fr 1fr;
+  border: 2px dotted gray;
+  border-radius: 5px;
+  padding: 2%;
 }
 
 .time {

@@ -15,10 +15,20 @@ export class SettingsComponent implements OnInit {
     coffeeOrTea: string = 'Neither';
     description: string = '';
     inlineString: string = '';
-    duallineString: string = '';
     inline: boolean = true;
+    user: any = new Object();
 
     public constructor(private service: BackendService, private router: Router) {
+        this.service.loadCurrentUser()
+            .subscribe((res) => {
+                if(res != null) {
+                    this.user = res;
+                    this.firstName = this.user.firstName;
+                    this.lastName = this.user.lastName;
+                    this.coffeeOrTea = this.user.coffeeOrTea;
+                    this.description = this.user.description;
+                }
+            })
     }
 
     public ngOnInit(): void {
@@ -31,6 +41,7 @@ export class SettingsComponent implements OnInit {
             .subscribe((res: boolean) => {
                 if(res) {
                     console.log("profile saved");
+                    this.friends();
                 }
             })
     }
