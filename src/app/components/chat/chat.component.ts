@@ -16,7 +16,7 @@ import { User } from 'src/app/models/User';
 export class ChatComponent implements OnInit, AfterViewChecked {
 
     public messages: Array<Message> = [];
-    public messagesOld: Array<Message> = [];
+    public messagesOldCount: number = 0;
     public otherUser: string = this.context.currentChatUsername;
     public input: string = '';
     public inline: boolean = true;
@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.myScrollContainer = new ElementRef(null);
         this.interval.setInterval("chat", () => {
             this.service.listMessages(this.otherUser).subscribe((data: Message[]) => { 
-                this.messagesOld = this.messages;
+                this.messagesOldCount = this.messages.length;
                 this.messages = data;
             });
             this.show();
@@ -52,8 +52,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private scrollToBottom(): void {
         try {
             this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-        } catch(err) { 
-        }                 
+        } catch(err) {}                 
     }
 
     public ngOnInit(): void {
@@ -94,12 +93,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     // helper for routing
     public changeRoute(route: string): void {
         this.interval.clearIntervals();
-        this.router.navigate([route])
+        this.router.navigate([route]);
     }
 
     // display chat history
     public show(): void {
-        if(this.messages.length !== this.messagesOld.length) {
+        if(this.messages.length !== this.messagesOldCount) {
             this.clearMessages();
             this.messages.forEach( message => {
                 this.createMessageElement(message.msg, message.from, message.time);
@@ -113,6 +112,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         let t = new Date(time);
         let timestring = t.toLocaleTimeString("de-DE");
 
+        /* structure:
+        <div class='chat-message'>
+            <div class='chat-helper-div'> <!--or chat-helper-div-column-->
+                <div class='chat-message-user'></div>
+                <div class='chat-message-text'></div>
+            </div>
+            <div class='time chat-helper-div'></div>
+        </div>
+        */
+
         // render outer div
         const chat_message = this.renderer.createElement('div');
         this.renderer.addClass(chat_message, 'chat-message');
@@ -121,7 +130,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         // render helper div
         const chat_helper_div = this.renderer.createElement('div');
-        
         this.renderer.appendChild(chat_message, chat_helper_div);
 
         // render username
@@ -135,7 +143,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.renderer.addClass(chat_message_text, 'chat-message-text');
         this.renderer.appendChild(chat_helper_div, chat_message_text);
         
-
         // render timestamp
         const time_div = this.renderer.createElement('div');
         this.renderer.addClass(time_div, 'time');
@@ -152,10 +159,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             this.renderer.addClass(chat_helper_div, 'chat-helper-div-column');
             chat_message_text.innerHTML = "&nbsp" + msg;
         }
-
     }
-
-         
 
     // clear chat history
     public clearMessages(): void {
