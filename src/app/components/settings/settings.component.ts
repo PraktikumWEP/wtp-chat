@@ -27,7 +27,12 @@ export class SettingsComponent implements OnInit {
     public saveSettings(): void {
         let inlineString: string = this.inline ? 'inline' : 'dualline';
         let profile = new Profile(this.firstName, this.lastName, this.coffeeOrTea, this.description, inlineString); 
-        this.service.saveCurrentUserProfile(profile);
+        this.service.saveCurrentUserProfile(profile)
+            .subscribe((res: boolean) => {
+                if(res) {
+                    console.log("profile saved");
+                }
+            })
     }
 
     public friends(): void {

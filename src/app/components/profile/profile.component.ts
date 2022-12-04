@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/User';
+import { Profile } from 'src/app/models/Profile';
 import { BackendService } from 'src/app/services/backend.service';
 import { ContextService } from 'src/app/services/context.service';
 
@@ -11,12 +13,17 @@ import { ContextService } from 'src/app/services/context.service';
 })
 export class ProfileComponent implements OnInit {
 
-    otherUser: string = this.context.currentChatUsername;
-    description: string = '';
-    coffeeOrTea: string = '';
-    name = '';
+    public otherUser: string = this.context.currentChatUsername;
+    public user: any = new Object();
+    public description: string = '';
 
     public constructor(private service: BackendService, private router: Router, private context: ContextService) { 
+        this.service.loadUser(this.otherUser)
+            .subscribe((res: any) => {
+                if(res != null) {
+                    this.user = res;
+                }
+            })
     }
 
     public ngOnInit(): void {

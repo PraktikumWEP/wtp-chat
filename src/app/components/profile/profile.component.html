@@ -11,20 +11,20 @@
             <label class="breadcrumb-divider">&nbsp;|&nbsp;</label>
             <a class="link removeFriend" (click)="removeFriend()">Remove Friend</a>
         </div>
-        <div class="mElement">
-            <p class="paragraph">{{ description }}</p>
+        <div class="mElement" *ngIf="user.description.length > 0">
+            <p class="paragraph">{{ user.description }}</p>
         </div>
-        <div class="mElement">
+        <div class="mElement" *ngIf="user.coffeeOrTea.length > 0">
             <div class="mElement">
                 <label style="font-weight: bold">Coffee or Tea?</label>
                 <div class="mElement">
-                    <label>&emsp;&emsp;{{ coffeeOrTea }}</label>
+                    <label>&emsp;&emsp;{{ user.coffeeOrTea }}</label>
                 </div>
             </div>
-            <div class="mElement">
+            <div class="mElement" *ngIf="user.firstName.length > 0">
                 <label style="font-weight: bold">Name</label>
                 <div class="mElement">
-                    <label>&emsp;&emsp;{{ name }}</label>
+                    <label>&emsp;&emsp;{{ user.firstName }}</label>
                 </div>
             </div>
         </div>
