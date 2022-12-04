@@ -13,8 +13,8 @@ import { IntervalService } from 'src/app/services/interval.service';
 })
 export class FriendsComponent implements OnInit {
     public user: User = new User();
-    public friends: string[] = [];
-    public friendReqs: string[] = [];
+    public friends: Friend[] = [];
+    public friendReqs: Friend[] = [];
     public searchValue: string = "";
     public searchList: string[] = [];
     public friendError: string = "";
@@ -51,30 +51,30 @@ export class FriendsComponent implements OnInit {
     public services(): void {
         this.service.loadFriends()
             .subscribe((res: Array<Friend>) => {
-                let nameList: string[] = [];
-                let reqList: string[] = [];
+                let reqList: Friend[] = [];
+                let acpList: Friend[] = [];
 
                 res.forEach((friend: Friend) => {
-                    nameList.push(friend.username);
                     if(friend.status == "requested") {
-                        reqList.push(friend.username);
+                        reqList.push(friend);
+                    }
+                    if(friend.status == "accepted") {
+                        acpList.push(friend);
                     }
                 }); 
 
-                this.friends = nameList;
                 this.friendReqs = reqList;
-                // console.log(res);
+                this.friends = acpList;
             })
 
         this.service.unreadMessageCounts()
             .subscribe((res: Map<string, number>) => {
                 this.unread = res;
-                // console.log("unread: " + res);
             })
     }
 
     public getUnreadCountOf(friend: string): number {
-        let res: any = this.unread.get(friend);
+        let res: number | undefined = this.unread.get(friend);
         return (typeof res === 'number') ? res : 0;
     }
 
@@ -103,7 +103,9 @@ export class FriendsComponent implements OnInit {
     public addFriend(): void {
         this.service.friendRequest(this.searchValue)
             .subscribe((res: boolean) => {
-                console.log("add friend send" + res);
+                if(res) {
+                    console.log("friend request send");
+                }
             })
     }
 

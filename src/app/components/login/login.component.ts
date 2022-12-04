@@ -10,6 +10,7 @@ import { BackendService } from 'src/app/services/backend.service';
 export class LoginComponent implements OnInit {
     public username: string = "";
     public password: string = "";
+    public error: string = "";
     
     public constructor(private router: Router, private service: BackendService) { 
     }
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
                 }
                 else {
                     console.log("login failed!");
+                    this.error = "Authentication failed";
                 }
             })
     }

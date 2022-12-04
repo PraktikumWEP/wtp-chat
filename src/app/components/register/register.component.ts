@@ -51,6 +51,7 @@ export class RegisterComponent implements OnInit {
 
     public checkPassword1() {
         const minPasswordLength = 8;
+        this.checkPassword2();
 
         if(this.password1.length < minPasswordLength) {
             this.passError1 = "Password must be at least " + minPasswordLength + " characters";

@@ -4,7 +4,6 @@ import { IntervalService } from 'src/app/services/interval.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { Message } from 'src/app/models/Message';
 import { Router } from '@angular/router';
-import { Profile } from 'src/app/models/Profile';
 import { ContextService } from 'src/app/services/context.service';
 
 @Component({
@@ -72,7 +71,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     // remove friend breadcrumb
     public removeFriend(): void {
         if(confirm("Do you really want to remove " + this.otherUser + " from your friendlist")) {
-            this.service.removeFriend(this.otherUser);
+            this.service.removeFriend(this.otherUser)
+                .subscribe((res: boolean) => {
+                    if(res) {
+                        this.changeRoute("/friends");
+                    }
+                })
         }
     }
 

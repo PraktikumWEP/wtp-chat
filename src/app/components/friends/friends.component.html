@@ -13,10 +13,11 @@
             <section>
                 <ul>
                     <li *ngFor="let friend of friends">
-                        <a class="link" (click)="switchChat('/chat', friend)">{{ friend }}</a>
-                        <label class="notification-count" *ngIf="getUnreadCountOf(friend) > 0">{{ getUnreadCountOf(friend) }}</label>
+                        <a class="link" (click)="switchChat('/chat', friend.username)">{{ friend.username }}</a>
+                        <label class="notification-count">{{ getUnreadCountOf(friend.username) }}</label>
                     </li>
                 </ul>
+                <div *ngIf="friends.length == 0">No friends yet</div>
             </section>
         </div>
         <hr class="friendlist-divider">
@@ -28,10 +29,11 @@
                 <div class="centerRow">
                     <ol *ngIf="friendReqs.length > 0">
                         <li *ngFor="let req of friendReqs">
-                            <a class="link">Friend request from {{ req }}</a>
+                            <a class="link">Friend request from {{ req.username }}</a>
                             <div class="centerCol mElement">
-                                <button class="button-small centerRow" (click)="acceptFriend(req)">Accept</button>
-                                <button class="button-small centerRow" (click)="acceptFriend(req)">Decline</button>
+                                <button class="button-small centerRow" (click)="acceptFriend(req.username)">Accept</button>
+                                <div style="width: 10px"></div>
+                                <button class="button-small centerRow" (click)="dismissFriend(req.username)">Decline</button>
                             </div>
                         </li>
                     </ol>
