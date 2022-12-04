@@ -25,7 +25,6 @@ export class FriendsComponent implements OnInit {
             .subscribe((res: User | null) => {
                 if(res != null) {
                     this.user = res;
-                    console.log(this.user);
                 }
                 else {
                     this.changeRoute("/");

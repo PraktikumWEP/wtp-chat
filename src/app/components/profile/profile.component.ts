@@ -15,11 +15,10 @@ export class ProfileComponent implements OnInit {
 
     public otherUser: string = this.context.currentChatUsername;
     public user: any = new Object();
-    public description: string = '';
 
     public constructor(private service: BackendService, private router: Router, private context: ContextService) { 
         this.service.loadUser(this.otherUser)
-            .subscribe((res: any) => {
+            .subscribe((res) => {
                 if(res != null) {
                     this.user = res;
                 }
