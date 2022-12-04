@@ -16,6 +16,7 @@ import { User } from 'src/app/models/User';
 export class ChatComponent implements OnInit, AfterViewChecked {
 
     public messages: Array<Message> = [];
+    public messagesOld: Array<Message> = [];
     public otherUser: string = this.context.currentChatUsername;
     public input: string = '';
     public inline: boolean = true;
@@ -28,9 +29,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.myScrollContainer = new ElementRef(null);
         this.interval.setInterval("chat", () => {
             this.service.listMessages(this.otherUser).subscribe((data: Message[]) => { 
+                this.messagesOld = this.messages;
                 this.messages = data;
             });
-            this.show(this.messages);
+            this.show();
             this.scrollToBottom();
         });
         this.service.loadCurrentUser()
@@ -96,11 +98,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     // display chat history
-    public show(messages: Array<Message>): void {
-        this.clearMessages();
-        messages.forEach( message => {
-            this.createMessageElement(message.msg, message.from, message.time);
-        })
+    public show(): void {
+        if(this.messages.length !== this.messagesOld.length) {
+            this.clearMessages();
+            this.messages.forEach( message => {
+                this.createMessageElement(message.msg, message.from, message.time);
+            })
+        }
     }
 
     // display one chat message
@@ -113,7 +117,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         const chat_message = this.renderer.createElement('div');
         this.renderer.addClass(chat_message, 'chat-message');
         this.renderer.addClass(chat_message, 'mElement');
-        this.renderer.appendChild(document.getElementById('chat'), chat_message);
+        this.renderer.appendChild(document.getElementsByClassName('chat')[0], chat_message);
 
         // render helper div
         const chat_helper_div = this.renderer.createElement('div');

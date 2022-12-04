@@ -202,14 +202,14 @@
   flex-direction: column;
 }
 
-#chat {
+.chat {
   overflow-y: auto;
   max-height: 200px;
   /*transform: rotateX(180deg);*/
   /* scrollbar firefox */
 }
 @-moz-document url-prefix() {
-  #chat {
+  .chat {
     scrollbar-color: #4f4f4f #fff;
     scrollbar-width: thin;
   }
