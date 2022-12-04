@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
         this.service.loadUser(this.otherUser)
             .subscribe((res) => {
                 if(res != null) {
-                    this.user = res;
+                    this.user = res; // ERROR TypeError: ctx.user.description is undefined
                 }
             })
     }
