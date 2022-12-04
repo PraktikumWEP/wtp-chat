@@ -14,7 +14,7 @@
                 <ul>
                     <li *ngFor="let friend of friends">
                         <a class="link" (click)="switchChat('/chat', friend)">{{ friend }}</a>
-                        <label class="notification-count">0</label>
+                        <label class="notification-count" *ngIf="getUnreadCountOf(friend) > 0">{{ getUnreadCountOf(friend) }}</label>
                     </li>
                 </ul>
             </section>

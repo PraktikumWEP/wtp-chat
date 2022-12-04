@@ -18,6 +18,7 @@ export class FriendsComponent implements OnInit {
     public searchValue: string = "";
     public searchList: string[] = [];
     public friendError: string = "";
+    public unread: Map<string, number> = new Map();
 
     public constructor(private router: Router, private service: BackendService, private interval: IntervalService, private context: ContextService) {
         this.service.loadCurrentUser()
@@ -62,13 +63,19 @@ export class FriendsComponent implements OnInit {
 
                 this.friends = nameList;
                 this.friendReqs = reqList;
-                console.log(res);
+                // console.log(res);
             })
 
         this.service.unreadMessageCounts()
             .subscribe((res: Map<string, number>) => {
-                console.log(res);
+                this.unread = res;
+                // console.log("unread: " + res);
             })
+    }
+
+    public getUnreadCountOf(friend: string): number {
+        let res: any = this.unread.get(friend);
+        return (typeof res === 'number') ? res : 0;
     }
 
     public searchFriend(): void {
