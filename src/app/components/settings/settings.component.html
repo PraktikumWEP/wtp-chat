@@ -50,11 +50,11 @@
                 <legend>Preferred Chat Layout</legend>
                 <div class="mElement">
                     <div class="mElement">
-                        <input type="radio" name="layout" checked="checked" required (click)="setInline()"/>
+                        <input type="radio" name="layout" checked="{{ inline ? 'checked' : '' }}" required (click)="setInline()"/>
                         <label for="layout1">Username and message in one line</label>
                     </div>
                     <div class="mElement">
-                        <input type="radio" name="layout" required (click)="setDualLine()"/>
+                        <input type="radio" name="layout" checked="{{ inline ? '' : 'checked' }}" required (click)="setDualLine()"/>
                         <label for="layout2">Username and message in seperated lines</label>
                     </div>
                 </div>

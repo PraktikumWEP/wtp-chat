@@ -27,6 +27,7 @@ export class SettingsComponent implements OnInit {
                     this.lastName = this.user.lastName;
                     this.coffeeOrTea = this.user.coffeeOrTea;
                     this.description = this.user.description;
+                    this.inline = (this.user.layout  === 'inline') ? true : false;
                 }
             })
     }
