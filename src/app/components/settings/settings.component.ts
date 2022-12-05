@@ -57,12 +57,8 @@ export class SettingsComponent implements OnInit {
     }
 
     // setters
-    public setInline(): void {
-        this.inline = true;
-    }
-
-    public setDualLine(): void {
-        this.inline = false;
+    public setInline(b: boolean): void {
+        this.inline = b;
     }
 }
 

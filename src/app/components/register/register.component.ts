@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
     }
 
     public changeRoute(route: string): void {
-        this.router.navigate([route])
+        this.router.navigate([route]);
     }
 
     public register() {
