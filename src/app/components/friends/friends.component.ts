@@ -42,7 +42,7 @@ export class FriendsComponent implements OnInit {
         this.changeRoute(route);
     }
     
-    public changeRoute(route: string, ): void {
+    public changeRoute(route: string): void {
         this.interval.clearIntervals();
         this.router.navigate([route]);
     }
