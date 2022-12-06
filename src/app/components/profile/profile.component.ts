@@ -32,7 +32,12 @@ export class ProfileComponent implements OnInit {
     public removeFriend(): void {
         console.log("remove");
         if(confirm("Do you really want to remove " + this.otherUser + " from your friendlist")) {
-            this.service.removeFriend(this.otherUser);
+            this.service.removeFriend(this.otherUser)
+                .subscribe((res: boolean) => {
+                    if(res) {
+                        this.changeRoute("/friends");
+                    }
+                })
         }
     }
 
