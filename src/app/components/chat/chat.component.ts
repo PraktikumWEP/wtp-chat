@@ -163,11 +163,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     // clear chat history
     public clearMessages(): void {
-        this.removeChilds(document.getElementById('chat'));
+        this.removeChilds(document.getElementsByClassName('chat')[0]);
     }
 
     // remove all child nodes from parent HTMLElement
-    public removeChilds(parent: HTMLElement | null): void {
+    public removeChilds(parent: Element | null): void {
         if (parent !== null) {
             while(parent.lastChild) {
                 parent.removeChild(parent.lastChild);
